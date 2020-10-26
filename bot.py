@@ -4,7 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 import random
-nomes = ['@arruda_dayy',
+nomes = ['@dayy_arruda',
+    '@arruda_dayy',
      '@kawamuracarol',
       '@sleitefelipe',
        '@jucimarams',
