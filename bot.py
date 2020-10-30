@@ -4,33 +4,11 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 import random
-nomes = ['@dayy_arruda',
-    '@arruda_dayy',
-     '@kawamuracarol',
-      '@sleitefelipe',
-       '@jucimarams',
-       '@lee.silva___',
-       '@elizatay01',
-       '@raffa_goo',
-       '@josewillians16',
-       '@lucas.tardellii', 
-       '@mandynasciment', 
-       '@_anamaartins_ ', 
-       '@julianafllor__ ', 
-       '@mandinharamospvd', 
-       '@nath.bartolo', 
-       '@bruna.barbieri', 
-       '@prazeryara', 
-       '@cintiam_santos', 
-       '@cintia_marah ', 
-       '@franciele3858', 
-       '@freitas.cgms', 
-       '@ygor_gois',
-       '@feleite97']
 
-#url = input(str('digite a url do sorteio: '))
-nome_user = input(str('digite nome de usuario do instagram: '))
-senha_user = input(str('digite a senha do instagram: '))
+
+nome_user = input('digite nome de usuario do instagram: ')
+senha_user = input('digite a senha do instagram: ')
+URL_Sorteio = input('cole o link do sorteio')
 
 class sorteio_bot:
     
@@ -39,11 +17,30 @@ class sorteio_bot:
         self.password = password
         self.driver = webdriver.Firefox()
 
-    def nome_marcacao (arroba):
-        quant = int(input('digite a quantidade de pessoas que deseja adicionar a lista'))
+    def nome_marcacao(self):
 
+        x = input('deseja adicionar algum @ a lista ? (s/n)')
+        if x.lower() == 's':
+            cont = int(input('digite a quantidade de pessoas que deseja adicionar a lista'))
+
+            for cont in range(0,cont):
+                arroba = input('digite')
+                try:
+                    arquivo = open('usuarios_instagram.txt', 'a')
+                except FileNotFoundError:
+                    arquivo = open('usuarios_instagram.txt', 'a')
+                arquivo.writelines(arroba + '\n')
+
+            arquivo.close()
+        else:
+            print('iniciando....')
+            
         
+    def ler_nomes(self):
 
+        arquivo = open('usuarios_instagram.txt', 'r')
+        arroba_insta = arquivo.readlines()
+        return arroba_insta
 
     @staticmethod
     def digitar(usuarios, campo_comentario):
@@ -86,7 +83,7 @@ class sorteio_bot:
         if i == 's':
             print('continuando')
 
-        driver.get('https://www.instagram.com/p/CGDyK7kgyb6/')
+        driver.get(URL_Sorteio)
 
         time.sleep(random.randint(3,6))
 
@@ -98,26 +95,19 @@ class sorteio_bot:
         comentario = driver.find_element_by_class_name("Ypffh")
         comentario.clear()
         time.sleep(random.randint(2,5))
-        self.digitar(random.choice(nomes),comentario)
+        self.digitar(random.choice(instagram.ler_nomes()),comentario)
         driver.find_element_by_xpath('//button[contains(text(), "Publicar")]').click()
 
-        #comentario.send_keys(random.choice(nomes))
+        
     def sair(self):
         self.driver.quit()
 
-
+        
 instagram = sorteio_bot(nome_user, senha_user)
+instagram.nome_marcacao()
 instagram.login()
 while True:
     for tempo in range(0,3):
         instagram.comentario(nomes)
         time.sleep(4)
-    #instagram.sair()    
     time.sleep(300)
-    
- 
-    # //input[@name="username"]
-    # //input[@name="password"]
-    # //button[@class="sqdOP  L3NKy   y3zKF"]
-    # or
-    #//class="Igw0E IwRSH eGOV_ _4EzTm"
